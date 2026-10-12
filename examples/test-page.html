@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sova — widget example</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        margin: 0;
+        background: #fbfbfc;
+        color: #16181d;
+      }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 120px; }
+      h1 { font-size: 26px; margin-bottom: 6px; }
+      p.lead { color: #5c646f; margin-top: 0; }
+      .box {
+        background: #fff;
+        border: 1px solid #e3e6ea;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 18px 0;
+      }
+      code, pre {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 13px;
+      }
+      pre { background: #f2f4f7; padding: 12px; border-radius: 8px; overflow-x: auto; }
+      button {
+        padding: 7px 13px;
+        border-radius: 7px;
+        border: 1px solid #ccd2db;
+        background: #fff;
+        cursor: pointer;
+        margin-right: 8px;
+      }
+      /* Deliberately strong host styles to verify Shadow DOM isolation. */
+      div { line-height: 1.5; }
+      button, input, textarea { font-size: 16px !important; }
+      * { letter-spacing: 0.01em; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Product example page</h1>
+      <p class="lead">
+        This page simulates a product website. One script embeds the widget in Shadow DOM,
+        isolated from the host styles.
+      </p>
+
+      <div class="box">
+        <strong>Getting started</strong>
+        <ol>
+          <li>Start the API and worker, then create a product and web channel in the panel.</li>
+          <li>Paste your channel public ID into the
+            <code>data-channel-id</code> attribute at the bottom of this file.</li>
+          <li>Serve this page over HTTP, allow its origin in the channel, and send a message.</li>
+          <li>With translation configured, replies use your language and the panel shows Russian translations.</li>
+        </ol>
+      </div>
+
+      <div class="box">
+        <strong>Verified identity</strong>
+        <p>
+          Your backend signs identity tokens using the channel secret. For integration testing,
+          use the channel sample-token control in the panel (or
+          <code>POST /api/v1/admin/channels/:id/sample-token</code>).
+        </p>
+        <pre>SovaChat.identify("PASTE_SIGNED_TOKEN_HERE")</pre>
+        <button onclick="SovaChat.open()">Open chat</button>
+        <button onclick="SovaChat.close()">Close</button>
+        <button onclick="SovaChat.logout()">Log out</button>
+        <button onclick="alert('Unread: ' + SovaChat.unread() + ', status: ' + SovaChat.status())">
+          Status
+        </button>
+      </div>
+
+      <div class="box">
+        <strong>History recovery</strong>
+        <p>
+          Send a few messages and refresh the page. History should recover without duplicates.
+          Disconnect in browser developer tools, send a message, then reconnect to check retry behavior.
+        </p>
+      </div>
+    </div>
+
+    <!-- Widget integration: replace the server URL and public channel ID. -->
+    <script
+      src="http://localhost:4000/widget.js"
+      data-channel-id="PASTE_PUBLIC_CHANNEL_ID"
+      async
+    ></script>
+  </body>
+</html>

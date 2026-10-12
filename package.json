@@ -1,0 +1,36 @@
+{
+  "name": "sova-chat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted customer support with a website widget, Android SDK, AI assistant, and operator inbox",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/panel",
+    "packages/widget"
+  ],
+  "scripts": {
+    "build": "npm run build -w @sova/shared && npm run build -w @sova/server && npm run build -w @sova/widget && npm run build -w @sova/panel",
+    "build:server": "npm run build -w @sova/shared && npm run build -w @sova/server",
+    "typecheck": "npm run typecheck -w @sova/shared && npm run typecheck -w @sova/server && npm run typecheck -w @sova/widget && npm run typecheck -w @sova/panel",
+    "dev": "npm run build -w @sova/shared && concurrently -n api,worker,panel,widget -c green,yellow,cyan,magenta \"npm:dev:api\" \"npm:dev:worker\" \"npm:dev:panel\" \"npm:dev:widget\"",
+    "dev:api": "npm run dev -w @sova/server",
+    "dev:worker": "npm run dev:worker -w @sova/server",
+    "dev:panel": "npm run dev -w @sova/panel",
+    "dev:widget": "npm run dev -w @sova/widget",
+    "migrate": "npm run migrate -w @sova/server",
+    "infra:up": "docker compose -f docker-compose.dev.yml up -d",
+    "infra:down": "docker compose -f docker-compose.dev.yml down",
+    "test": "node scripts/test-unit.cjs",
+    "check:publication": "node scripts/check-publication.cjs",
+    "package:android-sdk": "node scripts/package-android-sdk.cjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  },
+  "license": "MIT"
+}

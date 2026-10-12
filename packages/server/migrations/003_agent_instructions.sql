@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS sova_agent_instructions (
+  scope_key VARCHAR(64) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  instructions TEXT NOT NULL,
+  updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (scope_key, role)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

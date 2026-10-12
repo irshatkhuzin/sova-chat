@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS sova_support_scope (
+  message_id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+  out_of_scope TINYINT(1) NOT NULL DEFAULT 0,
+  confidence DECIMAL(4,3) NOT NULL DEFAULT 0,
+  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  CONSTRAINT sova_fk_scope_message FOREIGN KEY (message_id) REFERENCES sova_messages(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
